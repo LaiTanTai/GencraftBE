@@ -1,5 +1,7 @@
 package com.vti.Gencraft.Filter;
 
+import com.vti.Gencraft.Thread.UserContext;
+import com.vti.Gencraft.utils.CustomUserDetail;
 import com.vti.Gencraft.utils.JwtHelper;
 import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,9 +33,9 @@ public class JwtFilter extends OncePerRequestFilter {
                 Claims claims = jwtHelper.decodeToken(token);
                 if(claims != null){
                     // Tạo chứng thực cho Security
-                    String role = claims.getSubject();
+                    String userId = claims.getSubject();
                     SecurityContext context = SecurityContextHolder.getContext();
-                    UsernamePasswordAuthenticationToken userToken = new UsernamePasswordAuthenticationToken(null, null, AuthorityUtils.createAuthorityList(role));
+                    UsernamePasswordAuthenticationToken userToken = new UsernamePasswordAuthenticationToken(userId, null,AuthorityUtils.createAuthorityList(userId));
                     context.setAuthentication(userToken);
                 }
             }

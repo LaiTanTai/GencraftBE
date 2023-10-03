@@ -12,7 +12,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
 @RestController
 public class AuthenController {
     @Autowired
@@ -29,12 +28,11 @@ public class AuthenController {
         List<String> url = userService.getOneUserByIdReturnImageName(Integer.parseInt(token.getName()));
         //        Gán dữ liệu cho đối tượng trả về
         JwtUserResponse user = new JwtUserResponse(request.getUsername(),jwt,url);
-        BaseResponse res = new BaseResponse(200,"Đăng nhập thành công!",user);
-        return new ResponseEntity<>(res, HttpStatus.OK);
+        BaseResponse res = new BaseResponse(200,"Thành công",user);
+        return new ResponseEntity<>(res,HttpStatus.OK);
     }
     @RequestMapping(value = "/register",method = RequestMethod.POST)
     public ResponseEntity<BaseResponse> Register(@RequestBody SignupRequest request){
-
         boolean checkUser = userService.checkUser(request.getUsername(),request.getPassword());
         if(checkUser){
             BaseResponse baseResponse = new BaseResponse(200,"Đăng kí thành công");

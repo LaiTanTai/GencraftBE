@@ -5,26 +5,25 @@ import java.util.List;
 public class JwtUserResponse {
     private String username;
     private String jwt;
-    private List<String> url;
+    private List<String> urls;
 
-    public List<String> getUrl() {
-        return url;
+    public JwtUserResponse(String username, String jwt, List<String> urls) {
+        this.username = username;
+        this.jwt = jwt;
+        this.urls = urls;
     }
 
-    public void setUrl(List<String> url) {
-        this.url = url;
+    public List<String> getUrls() {
+        return this.urls;
+    }
+
+    public void setId(List<String> urls) {
+        this.urls = urls;
     }
 
     public String getUsername() {
         return username;
     }
-
-    public JwtUserResponse(String username, String jwt, List<String> url) {
-        this.username = username;
-        this.jwt = jwt;
-        this.url = url;
-    }
-
     public void setUsername(String username) {
         this.username = username;
     }

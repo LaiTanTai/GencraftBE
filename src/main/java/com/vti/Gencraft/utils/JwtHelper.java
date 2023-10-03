@@ -2,6 +2,7 @@ package com.vti.Gencraft.utils;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.io.Encoders;
 import io.jsonwebtoken.security.Keys;
@@ -15,19 +16,19 @@ public class JwtHelper {
     private String secret;
     public String generateToken(String data) {
 
-        Key key = Keys.hmacShaKeyFor(Encoders.BASE64.encode(secret.getBytes()).getBytes());
+        Key key = Keys.hmacShaKeyFor(secret.getBytes());
         String token = Jwts.builder()
                 .setSubject(data)
-                .signWith(key)
+                .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
         return token;
     }
 
     public Claims decodeToken(String token){
-        Key key = Keys.hmacShaKeyFor(Decoders.BASE64.decode(secret));
         Claims claims =  Jwts.parserBuilder()
-                .setSigningKey(key)
-                .build().parseClaimsJws(token)
+                .setSigningKey(Keys.hmacShaKeyFor(secret.getBytes()))
+                .build()
+                .parseClaimsJws(token)
                 .getBody();
         return claims;
     }
